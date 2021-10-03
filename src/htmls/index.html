@@ -1,0 +1,60 @@
+<html>
+    <head>
+    <title>IfCase Test</title>
+    </head>
+    <h1>Заголовок 1</h1>
+    <p>Ты кликнул <span id="textCounter">0</span> раз</p>
+    <button id="btnClickMe">Нажми меня</button>
+    <button id="btnSave">Сохранить</button>
+
+    <script>
+        const host = "http://localhost:5000/";
+        const endpoint_loadState = "loadstate";
+        const endpoint_saveState = "savestate";
+
+        const btnClickMe = document.querySelector('#btnClickMe');
+        const btnSave = document.querySelector('#btnSave');
+        const label = document.querySelector('#textCounter');
+
+        let clickCounter=0;
+
+        
+
+        function refreshView()
+        {
+            label.textContent = clickCounter;
+        }
+
+        async function loadState()
+        {
+            let responce = await fetch(host+endpoint_loadState);
+            let result = await responce.json();
+            clickCounter = result.counter;
+            refreshView();
+        }
+
+
+
+        btnClickMe.onclick = ()=>{
+            clickCounter++;
+            refreshView();
+        }
+
+        btnSave.onclick = async ()=>{            
+            const objForPost = {counter:clickCounter};
+            let response = await fetch(host+endpoint_saveState, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(objForPost)
+            });
+            let result = await response.json();
+        }
+
+
+        loadState();
+
+    </script>
+</html>
+  
