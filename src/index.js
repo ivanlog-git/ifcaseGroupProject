@@ -1,10 +1,28 @@
 const express = require("express");
+const hbs = require("hbs");
 const cookieParser = require("cookie-parser");
 const MongoClient = require("mongodb").MongoClient;
+
+const stuffRouter = require("./routers/stuffRouter");
+
+const Stuff = require("./models/Stuff");
+
+
+let s1 = new Stuff("Товар1","asd",12);
+s1.save();
+let s2 = new Stuff("Товар2","asd21",12);
+s2.save();
+new Stuff("Товар3","Что-то новое",12,false).save();
+
 
 
 const port = 5000;
 const app = express();
+
+app.set("view engine", "hbs");
+hbs.registerPartials(__dirname + "/views/partials");
+
+
 const jsonParser = express.json();
 
 let dbClient;
@@ -47,12 +65,20 @@ app.use(async (req, resp, next)=>{
 })
 
 
+app.use('/stuff', stuffRouter);
 
-app.get("/",(req, resp)=>{    
-    resp.sendFile(__dirname+'/htmls/index.html');
+app.get("/",(req, resp)=>{
+    const stuff=[];
+    stuff.push({name:"Колеса",desc:"17'", exist:true});
+    stuff.push({name:"Диски",desc:"16' литые", exist:true});
+    stuff.push({name:"Подшипник",desc:"16033 износостойкий", exist:false});   
+    resp.render('index.hbs',{title:"Детали", stuff});
 })
 
 
+
+
+/*
 app.get("/counter",(req, resp)=>{     
     req.session.counter++;
     resp.send(JSON.stringify({counter:req.session.counter}));
@@ -81,7 +107,7 @@ app.post("/savestate", jsonParser, async (req, resp)=>{
         resp.send(JSON.stringify({error:error.toString()}));    
     } 
 })
-
+*/
 
 
 

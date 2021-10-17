@@ -1,0 +1,13 @@
+<html>
+    <head>
+    <title>IfCase Test</title>    
+    </head>
+    <h1>Список товаров</h1>        
+    <ul>
+        {{#each stuffs}}
+          {{> stuffListItem this}}
+        {{/each}}
+    </ul>
+    {{> footer}}
+</html>
+  
