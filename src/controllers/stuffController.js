@@ -2,9 +2,13 @@
 const Stuff = require("../models/Stuff");
 
 
-exports.getAll= function (req, resp){
-    let stuffs=Stuff.GetAll();
-    resp.render('stuffList.hbs',{stuffs});
+exports.getAll= function (req, resp){    
+    const limit=3;
+    let skip=0;
+    if (req.query.p) skip=(parseInt(req.query.p)-1)*limit;
+    if (skip<0) skip=0;
+    let stuffs=Stuff.GetStuffs(skip,limit);
+    resp.render('stuffListPage.hbs',{stuffs});
 }
 
 exports.getItem= function(req, resp){
@@ -28,4 +32,15 @@ exports.createItem = function(req, resp){
     if (validResult!==true) return resp.sendStatus(422);
     newStuff.save();
     resp.redirect(`/stuff/item${newStuff.id}`)
+}
+
+
+
+exports.apiGetList = function (req, resp){    
+    const limit=3;
+    let skip=0;
+    if (req.query.p) skip=(parseInt(req.query.p)-1)*limit;
+    if (skip<0) skip=0;
+    let stuffs=Stuff.GetStuffs(skip,limit);
+    resp.render('stuffList.hbs',{stuffs});
 }

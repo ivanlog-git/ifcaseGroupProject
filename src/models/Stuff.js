@@ -8,6 +8,11 @@ class Stuff{
         return stuffs;        
     }
 
+    static GetStuffs(skip=0, limit=0) {
+        const result = stuffs.slice(skip, skip+limit);
+        return result;        
+    }
+
     static GetWithId(id) {
         for(const s of stuffs)
         if (s.id==id) return s;

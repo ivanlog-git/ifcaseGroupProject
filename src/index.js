@@ -8,11 +8,16 @@ const stuffRouter = require("./routers/stuffRouter");
 const Stuff = require("./models/Stuff");
 
 
-let s1 = new Stuff("Товар1","asd",12);
-s1.save();
-let s2 = new Stuff("Товар2","asd21",12);
-s2.save();
+new Stuff("Товар1","asd",12).save()
+let s2 = new Stuff("Товар2","asd21",12).save();
 new Stuff("Товар3","Что-то новое",12,false).save();
+new Stuff("Товар4","Что-тasdо новое",132,false).save();
+new Stuff("Товар5","Что-то asdasdновое",1322,false).save();
+new Stuff("Товар6","Что-то dasdновое",112,false).save();
+new Stuff("Товар7","Что-то ноasdasвоaе",17542,false).save();
+new Stuff("Товар8","Что-asdaто новое",122,false).save();
+new Stuff("Товар9","Что-тasdо новое",142,false).save();
+new Stuff("Товар10","Что-то asdновое",162,false).save();
 
 
 
@@ -45,7 +50,15 @@ function generateSid()
     return sid;
 }
 
+//Вставляем статику
+app.use("/js", express.static(__dirname + "/htdocs/js"));
+app.use("/css", express.static(__dirname + "/htdocs/css"));
+
+
+
+///Вставляем куки
 app.use(cookieParser());
+///Вставляем сессии
 app.use(async (req, resp, next)=>{    
     let sid = req.cookies.sid;    
     if (!sid) 

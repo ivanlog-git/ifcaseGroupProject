@@ -1,0 +1,33 @@
+<html>
+    <head>
+    <title>IfCase Test</title>    
+    </head>
+    <h1>Список товаров</h1>      
+    <a href="/stuff/newitem">Создать новый</a>
+    <ul id="stuffContainer">
+        {{#each stuffs}}
+          {{> stuffListItem this}}
+        {{/each}}
+    </ul>
+    <button id="btnLoadMore">Далее</button>
+    {{> footer}}
+    <script>
+      let page=1;
+      const container = document.querySelector('#stuffContainer');
+      const btnLoad = document.querySelector('#btnLoadMore');
+
+      btnLoad.onclick=async ()=>{
+        btnLoad.disabled=true;
+        try
+        {
+          const req = await fetch('/stuff/api/list?p='+(page+1));        
+          const data = await req.text();
+          if (data) container.innerHTML+=data;        
+          page++;
+        } catch (e) { console.error(e); }
+        btnLoad.disabled=false;
+      }
+    </script>
+    <script src="/js/app.js"></script>
+</html>
+  
