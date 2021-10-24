@@ -28,6 +28,14 @@ class Stuff{
         lastId=this.id;
         stuffs.push(this);
     }
+
+    validate()
+    {
+        if (!this.name) return "Name not valid";
+        if (!this.desc) return "Description not valid";
+        if (!this.price) return "Price not valid";
+        return true;
+    }
 }
 
 module.exports = Stuff;

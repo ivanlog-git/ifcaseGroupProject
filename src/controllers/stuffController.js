@@ -15,8 +15,17 @@ exports.getItem= function(req, resp){
         resp.render('404.hbs');        
 }
 
+exports.showCreateItem = function(req, resp){
+    resp.render('createStuffForm.hbs');
+}
+
 exports.createItem = function(req, resp){
-    let newStuff = new Stuff("name","desc","price");
+    if(!req.body) return resp.sendStatus(400);
+    const data=req.body;
+    let newStuff = new Stuff(data.name, data.description, data.price);    
+    newStuff.exist = data.available;
+    const validResult = newStuff.validate();
+    if (validResult!==true) return resp.sendStatus(422);
     newStuff.save();
-    resp.send('Товар создан: '+JSON.stringify(newStuff));
+    resp.redirect(`/stuff/item${newStuff.id}`)
 }

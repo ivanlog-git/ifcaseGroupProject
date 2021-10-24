@@ -46,8 +46,8 @@ function generateSid()
 }
 
 app.use(cookieParser());
-app.use(async (req, resp, next)=>{
-    let sid = req.cookies.sid;
+app.use(async (req, resp, next)=>{    
+    let sid = req.cookies.sid;    
     if (!sid) 
     {
         sid = generateSid();

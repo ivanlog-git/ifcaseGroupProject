@@ -1,0 +1,17 @@
+<html>
+    <head>
+    <title>IfCase Test</title>    
+    </head>
+    <h1>Создание товара</h1>        
+    <form action="/stuff/newitem" method="post">
+      <input type="text" name="name" placeholder="Название" value="" required>
+      <input type="text" name="description" placeholder="Описание" value="" required>
+      <input type="number" name="price" placeholder="Цена" value="" required>
+      
+      <input type="checkbox" id="available" name="available" placeholder="">
+      <label for="available">Есть в наличии</label>
+      <input type="submit" value="Создать">      
+    </form>
+    {{> footer}}
+</html>
+  
