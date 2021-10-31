@@ -1,16 +1,7 @@
-import { Example2 } from "./classes/Example2";
-import { Example } from "./Example";
+import { ExampleComponent } from "./classes/ExampleComponent";
+import { StuffListComponent } from "./classes/StuffListComponent";
 
-const body = document.querySelector('body');
+global.cmp = {};
+global.cmp.StuffList = StuffListComponent;
+global.cmp.Example = ExampleComponent;
 
-
-
-const ex = new Example();
-const ex2 = new Example();
-const ex3 = new Example();
-body.append(ex.el);
-body.append(ex2.el);
-body.append(ex3.el);
-
-
-body.append(new Example2().el);

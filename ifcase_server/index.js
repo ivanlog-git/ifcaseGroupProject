@@ -55,7 +55,6 @@ app.use("/js", express.static(__dirname + "/htdocs/js"));
 app.use("/css", express.static(__dirname + "/htdocs/css"));
 
 
-
 ///Вставляем куки
 app.use(cookieParser());
 ///Вставляем сессии

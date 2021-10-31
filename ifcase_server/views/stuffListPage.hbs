@@ -1,0 +1,32 @@
+<html>
+    <head>
+    <title>IfCase Test</title>    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fruktur&display=swap" rel="stylesheet"> 
+    <link href="/css/index.min.css" rel="stylesheet" >
+    </head>
+    <h1>Список товаров</h1>         
+    <h2 style="font-family: 'Fruktur', cursive;">Something here</h2> 
+    <a href="/stuff/newitem">Создать новый</a>
+
+    <div class="ic-stuff_container">
+      <ul class="list">        
+      </ul>
+      <button class="btn_next">Далее</button>  
+    </div>
+
+    {{> footer}}
+    <script src="/js/app.js"></script>
+    <script> 
+      const list = new cmp.StuffList(document.querySelector('.ic-stuff_container'));
+      list.loadNext();
+
+      const body = document.querySelector('body');
+      body.append(new cmp.Example().el);      
+
+
+    </script>
+    
+</html>
+  

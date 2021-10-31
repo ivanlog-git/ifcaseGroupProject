@@ -2,17 +2,17 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/Example.js":
-/*!************************!*\
-  !*** ./src/Example.js ***!
-  \************************/
+/***/ "./src/classes/ExampleComponent.js":
+/*!*****************************************!*\
+  !*** ./src/classes/ExampleComponent.js ***!
+  \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Example": () => (/* binding */ Example)
+/* harmony export */   "ExampleComponent": () => (/* binding */ ExampleComponent)
 /* harmony export */ });
-class Example
+class ExampleComponent
 {
     constructor()
     {
@@ -23,22 +23,37 @@ class Example
 
 /***/ }),
 
-/***/ "./src/classes/Example2.js":
-/*!*********************************!*\
-  !*** ./src/classes/Example2.js ***!
-  \*********************************/
+/***/ "./src/classes/StuffListComponent.js":
+/*!*******************************************!*\
+  !*** ./src/classes/StuffListComponent.js ***!
+  \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Example2": () => (/* binding */ Example2)
+/* harmony export */   "StuffListComponent": () => (/* binding */ StuffListComponent)
 /* harmony export */ });
-class Example2
+class StuffListComponent
 {
-    constructor()
+    constructor(el)
     {
-        this.el = document.createElement('div');
-        this.el.innerText="Пример компонента2 - Вот так это выглядит!";
+        this.el = el;
+        this._btnNext = el.querySelector('button.btn_next');
+        this._list = el.querySelector('ul.list');
+        this._page = 0;
+        this._btnNext.onclick = ()=>this.loadNext();        
+    }
+
+    async loadNext() {
+        this._btnNext.disabled=true;
+        try
+        {
+          const req = await fetch('/stuff/api/list?p='+(this._page+1));        
+          const data = await req.text();
+          if (data) this._list.innerHTML+=data;        
+          this._page++;
+        } catch (e) { console.error(e); }
+        this._btnNext.disabled=false;
     }
 }
 
@@ -83,6 +98,18 @@ class Example2
 /******/ 		};
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
@@ -107,24 +134,16 @@ var __webpack_exports__ = {};
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _classes_Example2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./classes/Example2 */ "./src/classes/Example2.js");
-/* harmony import */ var _Example__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Example */ "./src/Example.js");
+/* harmony import */ var _classes_ExampleComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./classes/ExampleComponent */ "./src/classes/ExampleComponent.js");
+/* harmony import */ var _classes_StuffListComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./classes/StuffListComponent */ "./src/classes/StuffListComponent.js");
 
 
 
-const body = document.querySelector('body');
+__webpack_require__.g.cmp = {};
+__webpack_require__.g.cmp.StuffList = _classes_StuffListComponent__WEBPACK_IMPORTED_MODULE_1__.StuffListComponent;
+__webpack_require__.g.cmp.Example = _classes_ExampleComponent__WEBPACK_IMPORTED_MODULE_0__.ExampleComponent;
 
 
-
-const ex = new _Example__WEBPACK_IMPORTED_MODULE_1__.Example();
-const ex2 = new _Example__WEBPACK_IMPORTED_MODULE_1__.Example();
-const ex3 = new _Example__WEBPACK_IMPORTED_MODULE_1__.Example();
-body.append(ex.el);
-body.append(ex2.el);
-body.append(ex3.el);
-
-
-body.append(new _classes_Example2__WEBPACK_IMPORTED_MODULE_0__.Example2().el);
 })();
 
 /******/ })()
